@@ -1,7 +1,7 @@
 package com.ravi.meroJob.controller;
 
 import com.ravi.meroJob.entity.Job;
-import com.ravi.meroJob.sevice.JobService;
+import com.ravi.meroJob.service.JobService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

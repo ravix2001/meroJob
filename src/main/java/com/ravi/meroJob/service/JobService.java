@@ -1,4 +1,4 @@
-package com.ravi.meroJob.sevice;
+package com.ravi.meroJob.service;
 
 import com.ravi.meroJob.entity.Job;
 import com.ravi.meroJob.repository.JobRepository;
