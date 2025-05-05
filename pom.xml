@@ -57,6 +57,19 @@
 			<scope>provided</scope>
 		</dependency>
 
+<!--		for frontend -->
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+<!--		for developer tools like automatic restart and live reload -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

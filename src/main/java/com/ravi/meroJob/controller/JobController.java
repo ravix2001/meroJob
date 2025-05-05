@@ -6,24 +6,57 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+//@CrossOrigin(origins = "http://localhost:5173")     // to enable Cross-Origin Resource Sharing (CORS) for the specified origin. It allows the front-end application (in this case, running on http://localhost:5173) to make HTTP requests to the Spring Boot back-end without getting blocked by the browser’s same-origin policy.
+//@RestController       // Used for REST APIs.
+@Controller      // Used in traditional MVC (Model-View-Controller) web applications.
 @RequestMapping
 public class JobController {
 
     @Autowired
     JobService jobService;
 
-    @GetMapping("/health-check")
+//    Used in traditional MVC (Model-View-Controller) web applications.
+
+    @GetMapping("/home")
+    public String homePage(Model model) {
+        model.addAttribute("message", "Hello User");
+        return "index"; // Corresponds to src/main/resources/templates/index.html
+    }
+
+    @GetMapping("/jobs/view")
+    public String viewJobs(Model model) {
+        List<Job> allJobs = jobService.getAllJobs();
+        model.addAttribute("jobs", allJobs);
+        return "jobs";
+    }
+
+    @GetMapping("/jobs/new")
+    public String showPostJobForm(Model model) {
+        model.addAttribute("job", new Job());
+        return "post-job";
+    }
+
+    @PostMapping("/jobs")
+    public String submitJob(@ModelAttribute Job job) {
+        jobService.saveJob(job);
+        return "redirect:/jobs/view";
+    }
+
+//    Used for REST APIs.
+
+    @GetMapping("/health-check")        // The class uses the `@Controller` annotation, which is primarily used for returning **views** (like HTML files), not raw responses like `"OK"`. Since `JobController` returns a simple string instead of a view, it should use the `@RestController` annotation.
     public String healthCheck() {
         return "OK";
     }
 
-    @GetMapping("jobs")
+    @GetMapping("/jobs")
     public ResponseEntity<?> getAll(){
         List<Job> allJobs = jobService.getAllJobs();
         if(allJobs != null && !allJobs.isEmpty()) {
